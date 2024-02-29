@@ -1,20 +1,44 @@
+// App.js
+import React, { useState } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
+import Login from './screens/Login';
+import Dashboard from './screens/Dashboard';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+const App = () => {
+  const [loginSession, setLoginSession] = useState();
+
+  function startLoginSession(loginToken) {
+    console.log(loginToken);
+    setLoginSession(loginToken);
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Image source={require('./assets/A2K-LOGO.png')} style={styles.logo} />
+      {loginSession === 'Logged in' ? (
+        <Dashboard />
+      ) : (
+        <Login userToken={startLoginSession} />
+      )}
+      <StatusBar style='auto' />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#bbbac6',
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  logo: {
+    width: 150,
+    height: 50,
+    resizeMode: 'contain',
+    marginTop: 50,
+    margin: 10,
   },
 });
+
+export default App;
